@@ -1,0 +1,481 @@
+from PIL import Image
+
+from pathlib import Path
+
+import shutil, os, zipfile, textwrap
+
+src_dir = Path("/mnt/data")
+
+out_dir = Path("/mnt/data/super_mael_game_store")
+
+out_dir.mkdir(exist_ok=True)
+
+# Source screenshots in the order they were uploaded.
+
+files = [
+
+    src_dir / "B38DA722-F9D9-4E3D-BA84-05E17ABF522F.jpeg",
+
+    src_dir / "BCE4D3D6-0664-405D-A553-99A1A515AC03.jpeg",
+
+    src_dir / "748621CC-A9EA-49DB-87F9-E7B11D2DF5DB.jpeg",
+
+    src_dir / "B87BF83A-4EAB-49D1-A612-AB2CA3649224.jpeg",
+
+    src_dir / "87FE37F0-9267-4962-A293-CF89B1EE6C6C.jpeg",
+
+    src_dir / "8CB776AF-DAC8-4E25-AF3F-721B59161069.jpeg",
+
+]
+
+# Crops focused on the actual branding/product images, excluding most Instagram UI.
+
+crop_specs = {
+
+    "logo.jpg": (0, 320, 710, 1260),
+
+    "payments.jpg": (0, 390, 710, 1110),
+
+    "switch_oled.jpg": (0, 325, 710, 1280),
+
+    "switch_lite.jpg": (0, 330, 710, 1210),
+
+    "accessories.jpg": (0, 320, 710, 1280),
+
+    "switch_2.jpg": (0, 350, 710, 1280),
+
+}
+
+for name, box in zip(crop_specs, crop_specs.values()):
+
+    # Map crop names to source screenshots.
+
+    idx = list(crop_specs.keys()).index(name)
+
+    im = Image.open(files[idx]).convert("RGB")
+
+    im.crop(box).save(out_dir / name, quality=90)
+
+html = r'''<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Super Mael Game Store</title>
+
+<style>
+
+:root{
+
+  --red:#e21b16;
+
+  --dark:#07090d;
+
+  --card:#11151c;
+
+  --muted:#a7adb8;
+
+  --line:#2a2f38;
+
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+
+  margin:0;
+
+  font-family:Arial,Helvetica,sans-serif;
+
+  color:#fff;
+
+  background:
+
+    radial-gradient(circle at 50% -10%, rgba(226,27,22,.28), transparent 35%),
+
+    linear-gradient(180deg,#07090d 0%,#0b0e13 55%,#050609 100%);
+
+}
+
+a{text-decoration:none;color:inherit}
+
+header{
+
+  position:sticky;top:0;z-index:20;
+
+  background:rgba(7,9,13,.92);
+
+  backdrop-filter:blur(12px);
+
+  border-bottom:1px solid #20242b;
+
+}
+
+.nav{
+
+  max-width:1150px;margin:auto;padding:12px 20px;
+
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+
+}
+
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.5px}
+
+.brand img{width:52px;height:52px;object-fit:cover;border-radius:50%;border:2px solid var(--red)}
+
+.brand span{font-size:18px}
+
+nav{display:flex;gap:22px;font-weight:700;color:#ddd}
+
+nav a:hover{color:#ff3b35}
+
+.hero{
+
+  max-width:1150px;margin:0 auto;padding:65px 20px 45px;
+
+  display:grid;grid-template-columns:1.05fr .95fr;gap:45px;align-items:center;
+
+}
+
+.badge{
+
+  display:inline-block;padding:8px 13px;border:1px solid #5c1b1a;
+
+  border-radius:999px;background:#160b0b;color:#ff625d;font-weight:800;
+
+}
+
+h1{font-size:clamp(42px,7vw,78px);line-height:.92;margin:18px 0}
+
+h1 span{color:var(--red)}
+
+.hero p{color:var(--muted);font-size:18px;line-height:1.6;max-width:600px}
+
+.buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
+
+.btn{
+
+  display:inline-block;padding:14px 20px;border-radius:10px;
+
+  background:var(--red);font-weight:900;box-shadow:0 8px 25px rgba(226,27,22,.2);
+
+}
+
+.btn.secondary{background:#171b22;border:1px solid #353b45}
+
+.hero-img{
+
+  width:100%;max-height:540px;object-fit:cover;object-position:center;
+
+  border-radius:20px;border:1px solid #343941;
+
+  box-shadow:0 20px 60px rgba(0,0,0,.55);
+
+}
+
+section{max-width:1150px;margin:auto;padding:55px 20px}
+
+.section-title{text-align:center;margin-bottom:30px}
+
+.section-title h2{font-size:38px;margin:0 0 8px}
+
+.section-title p{color:var(--muted)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+
+.card{
+
+  overflow:hidden;background:linear-gradient(180deg,#151a21,#0e1116);
+
+  border:1px solid var(--line);border-radius:16px;
+
+}
+
+.card img{width:100%;height:300px;object-fit:cover;object-position:center}
+
+.card-body{padding:18px}
+
+.card h3{margin:0 0 7px;font-size:21px}
+
+.card p{margin:0 0 15px;color:var(--muted);line-height:1.5}
+
+.price{font-size:22px;font-weight:900;color:#ff4741}
+
+.card .btn{margin-top:15px;width:100%;text-align:center}
+
+.payment{
+
+  display:grid;grid-template-columns:1fr 1fr;gap:25px;align-items:center;
+
+  background:#10141a;border:1px solid var(--line);border-radius:20px;padding:24px;
+
+}
+
+.payment img{width:100%;border-radius:14px}
+
+.payment-info h3{font-size:28px;margin-top:0}
+
+.bank{
+
+  padding:13px 15px;margin:10px 0;border:1px solid #302f35;
+
+  border-radius:10px;background:#0a0c10;
+
+}
+
+.bank strong{color:#ff4b45}
+
+.notice{font-size:13px;color:#8f96a2;line-height:1.5}
+
+footer{border-top:1px solid #20242b;text-align:center;color:#8f96a2;padding:30px 20px}
+
+@media(max-width:800px){
+
+  nav{display:none}
+
+  .hero{grid-template-columns:1fr;padding-top:40px}
+
+  .grid{grid-template-columns:1fr}
+
+  .payment{grid-template-columns:1fr}
+
+  .card img{height:360px}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+  <div class="nav">
+
+    <a class="brand" href="#">
+
+      <img src="logo.jpg" alt="Super Mael Game Store">
+
+      <span>SUPER MAEL GAME STORE</span>
+
+    </a>
+
+    <nav>
+
+      <a href="#productos">Productos</a>
+
+      <a href="#pagos">Pagos</a>
+
+      <a href="#contacto">Contacto</a>
+
+    </nav>
+
+  </div>
+
+</header>
+
+<main>
+
+  <section class="hero">
+
+    <div>
+
+      <div class="badge">🎮 GAME STORE</div>
+
+      <h1>Tu próxima<br><span>experiencia</span><br>empieza aquí.</h1>
+
+      <p>Consolas, accesorios y productos gaming de Nintendo y otras plataformas. Encuentra tu próximo equipo en Super Mael Game Store.</p>
+
+      <div class="buttons">
+
+        <a class="btn" href="#productos">VER PRODUCTOS</a>
+
+        <a class="btn secondary" href="#pagos">FORMAS DE PAGO</a>
+
+      </div>
+
+    </div>
+
+    <img class="hero-img" src="logo.jpg" alt="Logo Super Mael Game Store">
+
+  </section>
+
+  <section id="productos">
+
+    <div class="section-title">
+
+      <h2>Productos destacados</h2>
+
+      <p>Los productos mostrados usan las fotos proporcionadas.</p>
+
+    </div>
+
+    <div class="grid">
+
+      <article class="card">
+
+        <img src="switch_oled.jpg" alt="Nintendo Switch OLED">
+
+        <div class="card-body">
+
+          <h3>Nintendo Switch OLED</h3>
+
+          <p>Consola Nintendo Switch OLED mostrada en la publicación.</p>
+
+          <div class="price">Consultar precio</div>
+
+          <a class="btn" href="#contacto">COMPRAR</a>
+
+        </div>
+
+      </article>
+
+      <article class="card">
+
+        <img src="switch_lite.jpg" alt="Nintendo Switch Lite">
+
+        <div class="card-body">
+
+          <h3>Nintendo Switch Lite</h3>
+
+          <p>Modelo portátil mostrado en la publicación.</p>
+
+          <div class="price">Consultar precio</div>
+
+          <a class="btn" href="#contacto">COMPRAR</a>
+
+        </div>
+
+      </article>
+
+      <article class="card">
+
+        <img src="switch_2.jpg" alt="Nintendo Switch 2">
+
+        <div class="card-body">
+
+          <h3>Nintendo Switch 2</h3>
+
+          <p>La nueva generación de Nintendo Switch mostrada en la publicación.</p>
+
+          <div class="price">Consultar precio</div>
+
+          <a class="btn" href="#contacto">COMPRAR</a>
+
+        </div>
+
+      </article>
+
+      <article class="card">
+
+        <img src="accessories.jpg" alt="Accesorios gaming Nintendo">
+
+        <div class="card-body">
+
+          <h3>Accesorios gaming</h3>
+
+          <p>Accesorios para Nintendo mostrados en las publicaciones.</p>
+
+          <div class="price">RD$850</div>
+
+          <a class="btn" href="#contacto">COMPRAR</a>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </section>
+
+  <section id="pagos">
+
+    <div class="section-title">
+
+      <h2>Formas de pago</h2>
+
+      <p>Transferencias bancarias disponibles.</p>
+
+    </div>
+
+    <div class="payment">
+
+      <img src="payments.jpg" alt="Información de pagos Super Mael">
+
+      <div class="payment-info">
+
+        <h3>Transferencia bancaria</h3>
+
+        <!-- Reemplaza los números enmascarados por los datos que quieras publicar. -->
+
+        <div class="bank"><strong>BHD</strong><br>Cuenta de ahorro: ****</div>
+
+        <div class="bank"><strong>Banreservas</strong><br>Cuenta de ahorro: ****</div>
+
+        <div class="bank"><strong>Banco Popular</strong><br>Cuenta corriente: ****</div>
+
+        <div class="bank"><strong>Qik</strong><br>Cuenta de ahorro: ****</div>
+
+        <div class="bank"><strong>Alaver</strong><br>Cuenta de ahorro: ****</div>
+
+        <p class="notice">Por seguridad, verifica los datos de pago antes de realizar una transferencia.</p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section id="contacto">
+
+    <div class="section-title">
+
+      <h2>¿Quieres comprar?</h2>
+
+      <p>Contáctanos para confirmar disponibilidad y precio.</p>
+
+    </div>
+
+    <div style="text-align:center">
+
+      <a class="btn" href="https://wa.me/" target="_blank">CONTACTAR POR WHATSAPP</a>
+
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+
+  © 2026 Super Mael Game Store · Gaming con estilo 🎮
+
+</footer>
+
+</body>
+
+</html>
+
+'''
+
+(out_dir / "index.html").write_text(html, encoding="utf-8")
+
+zip_path = Path("/mnt/data/Super_Mael_Game_Store_Website.zip")
+
+with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+
+    for p in out_dir.iterdir():
+
+        z.write(p, arcname=p.name)
+
+print(f"Listo. Archivos creados en: {out_dir}")
+
+print(f"ZIP: {zip_path}")
