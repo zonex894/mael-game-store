@@ -1,0 +1,129 @@
+from pathlib import Path
+
+import base64
+
+src = Path("/mnt/data")
+
+files = [
+
+    src/"B38DA722-F9D9-4E3D-BA84-05E17ABF522F.jpeg",
+
+    src/"BCE4D3D6-0664-405D-A553-99A1A515AC03.jpeg",
+
+    src/"748621CC-A9EA-49DB-87F9-E7B11D2DF5DB.jpeg",
+
+    src/"B87BF83A-4EAB-49D1-A612-AB2CA3649224.jpeg",
+
+    src/"87FE37F0-9267-4962-A293-CF89B1EE6C6C.jpeg",
+
+    src/"8CB776AF-DAC8-4E25-AF3F-721B59161069.jpeg",
+
+]
+
+def uri(p):
+
+    return "data:image/jpeg;base64," + base64.b64encode(p.read_bytes()).decode("ascii")
+
+imgs = [uri(p) for p in files]
+
+html_doc = f"""<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Super Mael Game Store</title>
+
+<style>
+
+*{{box-sizing:border-box}}body{{margin:0;background:#070707;color:#fff;font-family:Arial,sans-serif}}
+
+header{{background:#101010;border-bottom:2px solid #e00000;padding:14px 6%;display:flex;justify-content:space-between;align-items:center}}
+
+.logo{{font-size:22px;font-weight:900}}.logo span{{color:#e00000}}nav a{{color:#fff;text-decoration:none;margin-left:20px;font-weight:bold}}
+
+.hero{{min-height:520px;display:grid;place-items:center;text-align:center;padding:50px 20px;background:linear-gradient(#000b,#000e),url("{imgs[0]}") center/cover}}
+
+.hero h1{{font-size:clamp(42px,8vw,76px);margin:0}}.red{{color:#e00000}}.hero p{{max-width:600px;color:#ddd;font-size:18px;line-height:1.5;margin:20px auto}}
+
+.btn{{display:inline-block;background:#e00000;color:#fff;padding:14px 22px;border-radius:8px;text-decoration:none;font-weight:bold;margin-top:10px}}
+
+section{{padding:55px 7%}}.title{{text-align:center;margin-bottom:35px}}.title h2{{font-size:36px}}.title p{{color:#999}}
+
+.products{{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px}}
+
+.card{{background:#121212;border:1px solid #292929;border-radius:14px;overflow:hidden}}.card img{{width:100%;height:300px;object-fit:cover;display:block}}
+
+.info{{padding:18px}}.info h3{{margin:0 0 10px}}.info p{{color:#aaa}}.price{{color:#ff2222;font-size:21px;font-weight:bold;margin:15px 0}}.info .btn{{width:100%;text-align:center}}
+
+.payment{{max-width:850px;margin:auto;background:#111;padding:25px;border-radius:14px}}.pay{{background:#181818;padding:15px;border-radius:9px;margin:10px 0}}.pay strong{{color:#e00000}}
+
+footer{{text-align:center;padding:30px;background:#111;color:#888}}@media(max-width:700px){{header{{flex-direction:column;gap:12px}}nav a{{margin:0 7px}}}}
+
+</style>
+
+</head>
+
+<body>
+
+<header><div class="logo">SUPER <span>MAEL</span> GAME STORE</div>
+
+<nav><a href="#productos">Productos</a><a href="#pagos">Pagos</a><a href="#contacto">Contacto</a></nav></header>
+
+<section class="hero"><div><h1>SUPER MAEL<br><span class="red">GAME STORE</span></h1>
+
+<p>Consolas, videojuegos y accesorios gaming.</p><a class="btn" href="#productos">VER PRODUCTOS</a></div></section>
+
+<section id="productos"><div class="title"><h2>🎮 Productos</h2><p>Productos de nuestras publicaciones.</p></div>
+
+<div class="products">
+
+<div class="card"><img src="{imgs[1]}" alt="Producto 1"><div class="info"><h3>Producto Gaming</h3><p>Producto de la publicación.</p><div class="price">Consultar precio</div><a class="btn" href="#contacto">COMPRAR</a></div></div>
+
+<div class="card"><img src="{imgs[2]}" alt="Producto 2"><div class="info"><h3>Nintendo Switch</h3><p>Producto de la publicación.</p><div class="price">Consultar precio</div><a class="btn" href="#contacto">COMPRAR</a></div></div>
+
+<div class="card"><img src="{imgs[3]}" alt="Producto 3"><div class="info"><h3>Nintendo Switch</h3><p>Producto de la publicación.</p><div class="price">Consultar precio</div><a class="btn" href="#contacto">COMPRAR</a></div></div>
+
+<div class="card"><img src="{imgs[4]}" alt="Accesorios"><div class="info"><h3>Accesorios Gaming</h3><p>Accesorios de la publicación.</p><div class="price">RD$850</div><a class="btn" href="#contacto">COMPRAR</a></div></div>
+
+<div class="card"><img src="{imgs[5]}" alt="Producto 5"><div class="info"><h3>Producto Gaming</h3><p>Producto de la publicación.</p><div class="price">Consultar precio</div><a class="btn" href="#contacto">COMPRAR</a></div></div>
+
+</div></section>
+
+<section id="pagos"><div class="title"><h2>💳 Formas de pago</h2><p>Transferencias bancarias.</p></div>
+
+<div class="payment">
+
+<div class="pay"><strong>BHD</strong><br>Cuenta: ****</div>
+
+<div class="pay"><strong>Banreservas</strong><br>Cuenta: ****</div>
+
+<div class="pay"><strong>Banco Popular</strong><br>Cuenta: ****</div>
+
+<div class="pay"><strong>Qik</strong><br>Cuenta: ****</div>
+
+<div class="pay"><strong>Alaver</strong><br>Cuenta: ****</div>
+
+</div></section>
+
+<section id="contacto" style="text-align:center"><div class="title"><h2>📲 ¿Quieres comprar?</h2>
+
+<p>Contáctanos para confirmar disponibilidad y precio.</p><a class="btn" href="#">WHATSAPP</a></div></section>
+
+<footer>© 2026 Super Mael Game Store</footer>
+
+</body>
+
+</html>"""
+
+out = Path("/mnt/data/super_mael_fotos_reales.html")
+
+out.write_text(html_doc, encoding="utf-8")
+
+print("Listo: super_mael_fotos_reales.html")
+
+print(f"Tamaño: {out.stat().st_size/1024/1024:.1f} MB")
