@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Super Mael Game Store</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:#070707;
+    color:white;
+}
+
+header{
+    background:#111;
+    border-bottom:2px solid #e00000;
+    padding:15px 30px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo img{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+}
+
+.logo h2{
+    color:white;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
+    font-weight:bold;
+}
+
+nav a:hover{
+    color:#e00000;
+}
+
+.hero{
+    min-height:600px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:50px 20px;
+
+    background:
+    linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.9)),
+    url("logo.jpg");
+
+    background-size:cover;
+    background-position:center;
+}
+
+.hero h1{
+    font-size:60px;
+    text-transform:uppercase;
+}
+
+.hero h1 span{
+    color:#e00000;
+}
+
+.hero p{
+    margin:20px auto;
+    max-width:600px;
+    color:#ccc;
+    font-size:18px;
+}
+
+.button{
+    display:inline-block;
+    background:#e00000;
+    color:white;
+    padding:15px 25px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+.button:hover{
+    background:#ff2020;
+}
+
+section{
+    padding:60px 7%;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.title h2{
+    font-size:38px;
+}
+
+.title p{
+    color:#aaa;
+    margin-top:10px;
+}
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:25px;
+}
+
+.product{
+    background:#121212;
+    border:1px solid #292929;
+    border-radius:15px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.product:hover{
+    transform:translateY(-8px);
+    border-color:#e00000;
+}
+
+.product img{
+    width:100%;
+    height:280px;
+    object-fit:cover;
+}
+
+.product-info{
+    padding:20px;
+}
+
+.product-info h3{
+    font-size:21px;
+    margin-bottom:10px;
+}
+
+.product-info p{
+    color:#aaa;
+    margin-bottom:15px;
+}
+
+.price{
+    color:#ff2525;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.product .button{
+    width:100%;
+    text-align:center;
+}
+
+.payment{
+    max-width:900px;
+    margin:auto;
+    background:#111;
+    padding:30px;
+    border-radius:15px;
+    border:1px solid #292929;
+}
+
+.payment-box{
+    background:#181818;
+    padding:18px;
+    border-radius:10px;
+    margin:12px 0;
+}
+
+.payment-box strong{
+    color:#e00000;
+}
+
+.contact{
+    text-align:center;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    background:#111;
+    border-top:1px solid #292929;
+    color:#888;
+}
+
+@media(max-width:700px){
+
+    header{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    nav a{
+        margin:0 7px;
+    }
+
+    .hero h1{
+        font-size:40px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+    <img src="logo.jpg" alt="Super Mael Game Store">
+    <h2>SUPER MAEL</h2>
+</div>
+
+<nav>
+    <a href="#productos">Productos</a>
+    <a href="#pagos">Pagos</a>
+    <a href="#contacto">Contacto</a>
+</nav>
+
+</header>
+
+
+<section class="hero">
+
+<div>
+
+<h1>
+SUPER MAEL<br>
+<span>GAME STORE</span>
+</h1>
+
+<p>
+Consolas, videojuegos y accesorios gaming.
+Encuentra lo que necesitas para tu próxima partida.
+</p>
+
+<a href="#productos" class="button">
+VER PRODUCTOS
+</a>
+
+</div>
+
+</section>
+
+
+<section id="productos">
+
+<div class="title">
+
+<h2>🎮 Productos</h2>
+
+<p>
+Mira nuestros productos disponibles.
+</p>
+
+</div>
+
+
+<div class="products">
+
+
+<div class="product">
+
+<img src="switch_oled.jpg" alt="Nintendo Switch OLED">
+
+<div class="product-info">
+
+<h3>Nintendo Switch OLED</h3>
+
+<p>Nintendo Switch OLED.</p>
+
+<div class="price">
+Consultar precio
+</div>
+
+<a href="#contacto" class="button">
+COMPRAR
+</a>
+
+</div>
+</div>
+
+
+
+<div class="product">
+
+<img src="switch_lite.jpg" alt="Nintendo Switch Lite">
+
+<div class="product-info">
+
+<h3>Nintendo Switch Lite</h3>
+
+<p>Consola portátil Nintendo.</p>
+
+<div class="price">
+Consultar precio
+</div>
+
+<a href="#contacto" class="button">
+COMPRAR
+</a>
+
+</div>
+</div>
+
+
+
+<div class="product">
+
+<img src="switch_2.jpg" alt="Nintendo Switch 2">
+
+<div class="product-info">
+
+<h3>Nintendo Switch 2</h3>
+
+<p>Nueva generación de Nintendo.</p>
+
+<div class="price">
+Consultar precio
+</div>
+
+<a href="#contacto" class="button">
+COMPRAR
+</a>
+
+</div>
+</div>
+
+
+
+<div class="product">
+
+<img src="accessories.jpg" alt="Accesorios">
+
+<div class="product-info">
+
+<h3>Accesorios Gaming</h3>
+
+<p>Accesorios para Nintendo y gaming.</p>
+
+<div class="price">
+RD$850
+</div>
+
+<a href="#contacto" class="button">
+COMPRAR
+</a>
+
+</div>
+</div>
+
+
+</div>
+
+</section>
+
+
+<section id="pagos">
+
+<div class="title">
+
+<h2>💳 Formas de pago</h2>
+
+<p>
+Puedes pagar mediante transferencia bancaria.
+</p>
+
+</div>
+
+
+<div class="payment">
+
+<div class="payment-box">
+<strong>BHD</strong>
+<br>
+Cuenta de ahorro: ****
+</div>
+
+<div class="payment-box">
+<strong>Banreservas</strong>
+<br>
+Cuenta de ahorro: ****
+</div>
+
+<div class="payment-box">
+<strong>Banco Popular</strong>
+<br>
+Cuenta corriente: ****
+</div>
+
+<div class="payment-box">
+<strong>Qik</strong>
+<br>
+Cuenta de ahorro: ****
+</div>
+
+<div class="payment-box">
+<strong>Alaver</strong>
+<br>
+Cuenta de ahorro: ****
+</div>
+
+</div>
+
+</section>
+
+
+<section id="contacto" class="contact">
+
+<div class="title">
+
+<h2>📲 ¿Quieres comprar?</h2>
+
+<p>
+Contáctanos para confirmar disponibilidad y precio.
+</p>
+
+<a href="#" class="button">
+WHATSAPP
+</a>
+
+</div>
+
+</section>
+
+
+<footer>
+
+© 2026 Super Mael Game Store
+
+</footer>
+
+</body>
+</html>
